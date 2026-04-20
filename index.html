@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preboda · Alejandro & Eurídice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+```
+body {
+  font-family: 'Josefin Sans', sans-serif;
+  background: linear-gradient(160deg, #1a1410 0%, #2c1f14 50%, #1a1410 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  color: #f5e6c8;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Nav ── */
+#nav {
+  position: fixed;
+  top: 12px; right: 12px;
+  display: flex; gap: 4px;
+  z-index: 100;
+  background: rgba(26,20,16,0.85);
+  border: 1px solid rgba(201,169,110,0.15);
+  border-radius: 2px;
+  padding: 4px;
+  backdrop-filter: blur(8px);
+}
+#nav button {
+  background: transparent; border: none;
+  color: rgba(245,230,200,0.35);
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300; font-size: 11px;
+  letter-spacing: 2px; text-transform: uppercase;
+  cursor: pointer; padding: 6px 12px;
+  border-radius: 1px; transition: all 0.2s;
+}
+#nav button.active {
+  background: rgba(201,169,110,0.1);
+  color: #c9a96e;
+}
+
+/* ── Card ── */
+.card {
+  background: rgba(255,248,235,0.04);
+  border: 1px solid rgba(201,169,110,0.2);
+  border-radius: 2px;
+  padding: 52px 48px;
+  max-width: 520px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeUp 0.8s ease both;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(201,169,110,0.15);
+}
+.card.wide { max-width: 720px; }
+.card.narrow { max-width: 380px; }
+
+.ornament { color: #c9a96e; font-size: 22px; letter-spacing: 8px; margin-bottom: 20px; opacity: 0.8; }
+.eyebrow { font-weight: 200; letter-spacing: 6px; font-size: 11px; color: #c9a96e; text-transform: uppercase; margin-bottom: 10px; }
+h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 48px; color: #f5e6c8; margin-bottom: 12px; text-align: center; line-height: 1.1; }
+h1.sm { font-size: 30px; }
+h1.xs { font-size: 28px; }
+.subtitle { font-weight: 200; font-size: 14px; color: rgba(245,230,200,0.6); text-align: center; line-height: 1.8; margin-bottom: 8px; }
+.divider { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, #c9a96e, transparent); margin: 24px 0; }
+.footer { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; color: rgba(201,169,110,0.5); letter-spacing: 2px; margin-top: 24px; }
+
+/* ── Form ── */
+.field { width: 100%; margin-bottom: 20px; }
+label { display: block; font-weight: 300; letter-spacing: 2px; font-size: 11px; text-transform: uppercase; color: rgba(245,230,200,0.7); margin-bottom: 8px; }
+input, textarea {
+  width: 100%; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,169,110,0.3); border-radius: 1px;
+  padding: 12px 16px; color: #f5e6c8;
+  font-family: 'Josefin Sans', sans-serif; font-weight: 300; font-size: 14px;
+  outline: none; transition: border-color 0.2s;
+}
+input:focus, textarea:focus { border-color: #c9a96e; }
+textarea { height: 80px; resize: none; }
+input[type="password"] { letter-spacing: 3px; }
+
+.btn-row { display: flex; gap: 12px; width: 100%; }
+.choice-btn {
+  flex: 1; padding: 12px 8px;
+  background: transparent; border: 1px solid rgba(201,169,110,0.25);
+  color: rgba(245,230,200,0.5); font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300; letter-spacing: 1px; font-size: 13px;
+  cursor: pointer; transition: all 0.2s; border-radius: 1px;
+}
+.choice-btn.active { background: rgba(201,169,110,0.12); border-color: #c9a96e; color: #c9a96e; }
+
+.counter { display: flex; align-items: center; gap: 20px; padding: 8px 0; }
+.counter-btn {
+  width: 36px; height: 36px; background: transparent;
+  border: 1px solid rgba(201,169,110,0.3); color: #c9a96e;
+  font-size: 20px; cursor: pointer; border-radius: 1px; transition: background 0.2s;
+}
+.counter-btn:hover { background: rgba(201,169,110,0.08); }
+.counter-num { font-family: 'Cormorant Garamond', serif; font-size: 32px; color: #f5e6c8; min-width: 30px; text-align: center; }
+
+.submit-btn {
+  width: 100%; padding: 14px;
+  background: linear-gradient(135deg, #c9a96e 0%, #a07840 100%);
+  border: none; color: #1a1410;
+  font-family: 'Josefin Sans', sans-serif; font-weight: 400;
+  letter-spacing: 3px; font-size: 12px; text-transform: uppercase;
+  cursor: pointer; transition: opacity 0.2s; border-radius: 1px;
+}
+.submit-btn:disabled { opacity: 0.6; cursor: default; }
+.submit-btn.sm { width: auto; font-size: 13px; padding: 10px 20px; align-self: flex-end; }
+
+.error { color: #e05555; font-size: 13px; font-weight: 300; margin-bottom: 12px; text-align: center; }
+.hidden { display: none !important; }
+
+/* ── Admin ── */
+.stats-row { display: flex; gap: 16px; width: 100%; margin-bottom: 16px; flex-wrap: wrap; justify-content: center; }
+.stat-box {
+  flex: 1 1 140px; background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(201,169,110,0.15); border-radius: 2px;
+  padding: 20px 16px; display: flex; flex-direction: column;
+  align-items: center; gap: 6px;
+}
+.stat-num { font-family: 'Cormorant Garamond', serif; font-weight: 300; line-height: 1; font-size: 40px; color: #c9a96e; }
+.stat-num.big { font-size: 52px; }
+.stat-num.grey { color: #888; }
+.stat-label { font-weight: 200; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(245,230,200,0.45); text-align: center; }
+
+.section { width: 100%; margin-top: 24px; }
+.section-title { font-weight: 300; letter-spacing: 2px; font-size: 12px; text-transform: uppercase; color: #c9a96e; margin-bottom: 12px; }
+.section-title.grey { color: #888; }
+.table { width: 100%; display: flex; flex-direction: column; gap: 6px; }
+.row {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
+  padding: 10px 14px; background: rgba(255,255,255,0.025);
+  border-left: 2px solid rgba(201,169,110,0.3); border-radius: 1px;
+}
+.row.dim { opacity: 0.7; }
+.row-name { flex: 1 1 160px; font-weight: 300; font-size: 14px; color: #f5e6c8; letter-spacing: 0.5px; }
+.badge {
+  background: rgba(201,169,110,0.12); border: 1px solid rgba(201,169,110,0.3);
+  color: #c9a96e; font-size: 11px; font-weight: 300; letter-spacing: 1px;
+  padding: 3px 10px; border-radius: 10px; text-transform: uppercase;
+}
+.note { flex: 1 1 200px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 13px; color: rgba(245,230,200,0.45); }
+.date { font-size: 11px; color: rgba(245,230,200,0.3); letter-spacing: 0.5px; white-space: nowrap; }
+.empty { font-weight: 200; font-size: 14px; color: rgba(245,230,200,0.3); text-align: center; margin-top: 24px; }
+
+@media (max-width: 560px) {
+  .card { padding: 40px 24px; }
+  h1 { font-size: 38px; }
+}
+```
+
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+
+  <div id="nav">
+    <button class="active" onclick="showView('rsvp')">Invitado</button>
+    <button onclick="showView('admin')">Admin</button>
+  </div>
+
+  <!-- ══ RSVP FORM ══ -->
+
+  <div id="view-rsvp">
+    <div id="rsvp-form-wrap" class="card">
+      <div class="ornament">✦</div>
+      <p class="eyebrow">Nos casamos</p>
+      <h1>Preboda</h1>
+      <p class="subtitle">Nos encantaría que pudieras acompañarnos<br>en la celebración previa a nuestra boda.</p>
+      <div class="divider"></div>
+
+```
+  <div class="field">
+    <label>Tu nombre completo</label>
+    <input id="f-name" type="text" placeholder="Nombre y apellidos" />
+  </div>
+
+  <div class="field">
+    <label>¿Asistirás a la Preboda?</label>
+    <div class="btn-row">
+      <button class="choice-btn" id="btn-yes" onclick="setAttending(true)">✓ Sí, allí estaré</button>
+      <button class="choice-btn" id="btn-no"  onclick="setAttending(false)">✗ No podré ir</button>
+    </div>
+  </div>
+
+  <div class="field hidden" id="field-guests">
+    <label>¿Cuántas personas venís? (incluido tú)</label>
+    <div class="counter">
+      <button class="counter-btn" onclick="changeGuests(-1)">−</button>
+      <span class="counter-num" id="guests-num">1</span>
+      <button class="counter-btn" onclick="changeGuests(1)">+</button>
+    </div>
+  </div>
+
+  <div class="field">
+    <label>¿Algo que quieras decirnos? <span style="opacity:.5">(opcional)</span></label>
+    <textarea id="f-note" placeholder="Intolerancias, restricciones, un mensaje…"></textarea>
+  </div>
+
+  <p class="error hidden" id="f-error"></p>
+  <button class="submit-btn" id="f-submit" onclick="submitRSVP()">Confirmar asistencia</button>
+  <p class="footer">Alejandro &amp; Eurídice</p>
+</div>
+
+<div id="rsvp-success" class="card hidden">
+  <div class="ornament">✦</div>
+  <h1 id="success-title"></h1>
+  <p class="subtitle" id="success-msg"></p>
+  <div class="divider"></div>
+  <p class="footer">Alejandro &amp; Eurídice</p>
+</div>
+```
+
+  </div>
+
+  <!-- ══ ADMIN ══ -->
+
+  <div id="view-admin" class="hidden">
+
+```
+<div id="admin-login" class="card narrow">
+  <div class="ornament">⚙</div>
+  <h1 class="xs">Panel de administración</h1>
+  <div class="field" style="margin-top:20px">
+    <label>Contraseña</label>
+    <input type="password" id="pwd-input" placeholder="••••••••" onkeydown="if(event.key==='Enter') adminLogin()" />
+    <p class="error hidden" id="pwd-error">Contraseña incorrecta</p>
+  </div>
+  <button class="submit-btn" onclick="adminLogin()">Entrar</button>
+</div>
+
+<div id="admin-dashboard" class="card wide hidden">
+  <div class="ornament">✦</div>
+  <h1 class="sm">Confirmaciones · Preboda</h1>
+  <p class="eyebrow">Alejandro &amp; Eurídice</p>
+  <div class="divider"></div>
+
+  <div class="stats-row">
+    <div class="stat-box">
+      <span class="stat-num" id="stat-yes">0</span>
+      <span class="stat-label">Confirman asistencia</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num big" id="stat-total">0</span>
+      <span class="stat-label">Total de personas</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num grey" id="stat-no">0</span>
+      <span class="stat-label">No pueden asistir</span>
+    </div>
+  </div>
+
+  <button class="submit-btn sm" onclick="loadRSVPs()" style="margin-top:8px;margin-left:auto">↺ Actualizar</button>
+
+  <p class="empty hidden" id="admin-empty">Aún no hay respuestas.</p>
+
+  <div class="section hidden" id="section-yes">
+    <p class="section-title" id="section-yes-title"></p>
+    <div class="table" id="table-yes"></div>
+  </div>
+
+  <div class="section hidden" id="section-no">
+    <p class="section-title grey">✗ No asisten (<span id="no-count">0</span>)</p>
+    <div class="table" id="table-no"></div>
+  </div>
+
+  <div class="divider"></div>
+  <p class="footer" style="font-size:14px">Panel privado · Alejandro &amp; Eurídice</p>
+</div>
+```
+
+  </div>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyf1JYlT6CNfaC6XBO5gY96E_mEJz9nEIFrliKoSdVdyDuVsDp6c6uibLNnzTzOT3fEHw/exec";
+    const ADMIN_PASSWORD = "alexyeuri";
+
+    let attending = null;
+    let guests = 1;
+
+    // ── Navigation ──────────────────────────────────────────────────────────
+    function showView(v) {
+      document.getElementById("view-rsvp").classList.toggle("hidden", v !== "rsvp");
+      document.getElementById("view-admin").classList.toggle("hidden", v !== "admin");
+      document.querySelectorAll("#nav button").forEach((b, i) => {
+        b.classList.toggle("active", (i === 0 && v === "rsvp") || (i === 1 && v === "admin"));
+      });
+    }
+
+    // ── RSVP form ───────────────────────────────────────────────────────────
+    function setAttending(val) {
+      attending = val;
+      document.getElementById("btn-yes").classList.toggle("active", val === true);
+      document.getElementById("btn-no").classList.toggle("active",  val === false);
+      document.getElementById("field-guests").classList.toggle("hidden", val !== true);
+    }
+
+    function changeGuests(delta) {
+      guests = Math.min(10, Math.max(1, guests + delta));
+      document.getElementById("guests-num").textContent = guests;
+    }
+
+    async function submitRSVP() {
+      const name = document.getElementById("f-name").value.trim();
+      const note = document.getElementById("f-note").value.trim();
+      const errEl = document.getElementById("f-error");
+
+      if (!name)           { showError("Por favor, escribe tu nombre."); return; }
+      if (attending === null) { showError("Por favor, indica si asistirás."); return; }
+      errEl.classList.add("hidden");
+
+      const btn = document.getElementById("f-submit");
+      btn.disabled = true;
+      btn.textContent = "Enviando…";
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nombre: name, asiste: attending, personas: guests, nota: note })
+        });
+        // no-cors means we can't read the response, but the request went through
+        showSuccess(name, attending);
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = "Confirmar asistencia";
+        showError("Hubo un problema al enviar. Inténtalo de nuevo.");
+      }
+    }
+
+    function showError(msg) {
+      const el = document.getElementById("f-error");
+      el.textContent = msg;
+      el.classList.remove("hidden");
+    }
+
+    function showSuccess(name, att) {
+      document.getElementById("rsvp-form-wrap").classList.add("hidden");
+      const s = document.getElementById("rsvp-success");
+      s.classList.remove("hidden");
+      document.getElementById("success-title").textContent = "¡Gracias, " + name.split(" ")[0] + "!";
+      document.getElementById("success-msg").textContent = att
+        ? "Nos alegra mucho saber que estarás con nosotros. ¡Nos vemos en la Preboda! 🥂"
+        : "Lamentamos que no puedas acompañarnos. ¡Te echamos de menos!";
+    }
+
+    // ── Admin ───────────────────────────────────────────────────────────────
+    function adminLogin() {
+      const pwd = document.getElementById("pwd-input").value;
+      if (pwd === ADMIN_PASSWORD) {
+        document.getElementById("admin-login").classList.add("hidden");
+        document.getElementById("admin-dashboard").classList.remove("hidden");
+        loadRSVPs();
+      } else {
+        document.getElementById("pwd-error").classList.remove("hidden");
+      }
+    }
+
+    async function loadRSVPs() {
+      document.getElementById("admin-empty").classList.add("hidden");
+      try {
+        const res = await fetch(SCRIPT_URL);
+        const raw = await res.json();
+        // Skip header row if sheets returns it
+        const data = Array.isArray(raw) ? raw.filter(r => r.timestamp && r.timestamp !== "timestamp") : [];
+        renderDashboard(data);
+      } catch (e) {
+        document.getElementById("admin-empty").textContent = "Error al cargar los datos.";
+        document.getElementById("admin-empty").classList.remove("hidden");
+      }
+    }
+
+    function renderDashboard(data) {
+      const yes = data.filter(r => r.asiste === "Sí" || r.asiste === true);
+      const no  = data.filter(r => r.asiste === "No" || r.asiste === false);
+      const total = yes.reduce((s, r) => s + (parseInt(r.personas) || 1), 0);
+
+      document.getElementById("stat-yes").textContent   = yes.length;
+      document.getElementById("stat-total").textContent = total;
+      document.getElementById("stat-no").textContent    = no.length;
+
+      if (data.length === 0) {
+        document.getElementById("admin-empty").classList.remove("hidden");
+      }
+
+      // Yes table
+      const secYes = document.getElementById("section-yes");
+      if (yes.length > 0) {
+        document.getElementById("section-yes-title").textContent =
+          `✓ Asisten (${yes.length} ${yes.length === 1 ? "respuesta" : "respuestas"} · ${total} personas)`;
+        document.getElementById("table-yes").innerHTML = yes.map(r => `
+          <div class="row">
+            <span class="row-name">${r.nombre || r.name || ""}</span>
+            <span class="badge">${r.personas || 1} ${(parseInt(r.personas)||1) === 1 ? "persona" : "personas"}</span>
+            ${r.nota ? `<span class="note">"${r.nota}"</span>` : ""}
+            <span class="date">${r.timestamp || ""}</span>
+          </div>`).join("");
+        secYes.classList.remove("hidden");
+      } else { secYes.classList.add("hidden"); }
+
+      // No table
+      const secNo = document.getElementById("section-no");
+      if (no.length > 0) {
+        document.getElementById("no-count").textContent = no.length;
+        document.getElementById("table-no").innerHTML = no.map(r => `
+          <div class="row dim">
+            <span class="row-name">${r.nombre || r.name || ""}</span>
+            ${r.nota ? `<span class="note">"${r.nota}"</span>` : ""}
+            <span class="date">${r.timestamp || ""}</span>
+          </div>`).join("");
+        secNo.classList.remove("hidden");
+      } else { secNo.classList.add("hidden"); }
+    }
+  </script>
+
+</body>
+</html>
