@@ -82,6 +82,12 @@ h1.sm { font-size: 30px; }
 h1.xs { font-size: 28px; }
 .subtitle { font-weight: 200; font-size: 14px; color: rgba(245,230,200,0.6); text-align: center; line-height: 1.8; margin-bottom: 8px; }
 .divider { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, #c9a96e, transparent); margin: 24px 0; }
+.event-details { display: flex; flex-direction: column; gap: 10px; width: 100%; margin-bottom: 4px; }
+.event-row { display: flex; align-items: center; gap: 12px; }
+.event-icon { color: #c9a96e; font-size: 14px; width: 18px; text-align: center; flex-shrink: 0; }
+.event-text { font-weight: 200; font-size: 13px; color: rgba(245,230,200,0.7); letter-spacing: 0.5px; }
+.event-text a { color: #c9a96e; text-decoration: none; border-bottom: 1px solid rgba(201,169,110,0.3); transition: border-color 0.2s; }
+.event-text a:hover { border-color: #c9a96e; }
 .footer { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; color: rgba(201,169,110,0.5); letter-spacing: 2px; margin-top: 24px; }
 
 /* ── Form ── */
@@ -192,6 +198,18 @@ input[type="password"] { letter-spacing: 3px; }
       <div class="divider"></div>
 
 ```
+  <div class="event-details">
+    <div class="event-row">
+      <span class="event-icon">📅</span>
+      <span class="event-text">8 de mayo de 2026 &nbsp;·&nbsp; 18:00 – 22:00 h</span>
+    </div>
+    <div class="event-row">
+      <span class="event-icon">📍</span>
+      <span class="event-text"><a href="https://maps.google.com/maps/place//data=!4m2!3m1!1s0xd71895e733b5b0b:0x89da728f5a79c8fe?sa=X&ved=1t:8290&hl=es-es&ictx=111" target="_blank">El Patio de Carmen</a></span>
+    </div>
+  </div>
+  <div class="divider"></div>
+
   <div class="field">
     <label>Tu nombre completo</label>
     <input id="f-name" type="text" placeholder="Nombre y apellidos" />
